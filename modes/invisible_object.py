@@ -26,6 +26,7 @@ def get_green_mask(frame):
 
 
 def clean_mask(mask):
+    # 5x5 kernel: small enough to preserve shape, large enough to remove noise
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=1)
     mask = cv2.dilate(mask, kernel, iterations=1)
@@ -59,8 +60,6 @@ if __name__ == "__main__":
         mask = clean_mask(mask)
         result = apply_invisibility(frame, background, mask)
 
-        cv2.imshow("Live Feed", frame)
-        cv2.imshow("Green Mask", mask)
         cv2.imshow("Invisible Object", result)
 
         key = cv2.waitKey(1) & 0xFF
