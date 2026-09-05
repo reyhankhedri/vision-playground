@@ -24,11 +24,22 @@ def get_green_mask(frame):
     mask = cv2.inRange(hsv, lower_green, upper_green)
     return mask
 
+
 def clean_mask(mask):
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=1)
     mask = cv2.dilate(mask, kernel, iterations=1)
     return mask
+
+
+def apply_invisibility(frame, background, mask):
+    inverse_mask = cv2.bitwise_not(mask)
+
+    green_area = cv2.bitwise_and(background, background, mask=mask)
+    rest_area = cv2.bitwise_and(frame, frame, mask=inverse_mask)
+
+    result = cv2.add(green_area, rest_area)
+    return result
 
 
 if __name__ == "__main__":
@@ -46,9 +57,11 @@ if __name__ == "__main__":
 
         mask = get_green_mask(frame)
         mask = clean_mask(mask)
+        result = apply_invisibility(frame, background, mask)
 
         cv2.imshow("Live Feed", frame)
         cv2.imshow("Green Mask", mask)
+        cv2.imshow("Invisible Object", result)
 
         key = cv2.waitKey(1) & 0xFF
         if key == 27:  # ESC
