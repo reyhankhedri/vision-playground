@@ -58,10 +58,22 @@ def calculate_smile_ratio(landmarks):
     return smile_ratio
 
 
-def classify_mood(mar, smile_ratio):
+def calculate_mouth_corner_drop(landmarks):
+    upper_lip = landmarks[13]
+    mouth_left = landmarks[61]
+    mouth_right = landmarks[291]
+
+    avg_corner_y = (mouth_left.y + mouth_right.y) / 2
+    drop = avg_corner_y - upper_lip.y
+    return drop
+
+
+def classify_mood(mar, smile_ratio, corner_drop):
     if mar > 0.6:
         return "Surprised"
     elif smile_ratio > 0.42:
         return "Happy"
+    elif corner_drop > 0.012:
+        return "Sad"
     else:
         return "Neutral"

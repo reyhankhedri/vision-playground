@@ -3,7 +3,8 @@ import mediapipe as mp
 from core.camera import Camera
 from core.face_tracking import (
     create_face_landmarker, get_landmarks,
-    calculate_mar, calculate_smile_ratio, classify_mood
+    calculate_mar, calculate_smile_ratio,
+    calculate_mouth_corner_drop, classify_mood
 )
 
 
@@ -26,7 +27,8 @@ if __name__ == "__main__":
         if landmarks is not None:
             mar = calculate_mar(landmarks)
             smile_ratio = calculate_smile_ratio(landmarks)
-            mood = classify_mood(mar, smile_ratio)
+            corner_drop = calculate_mouth_corner_drop(landmarks)
+            mood = classify_mood(mar, smile_ratio, corner_drop)
 
             cv2.putText(
                 frame, f"Mood: {mood}", (10, 30),
@@ -34,11 +36,15 @@ if __name__ == "__main__":
             )
             cv2.putText(
                 frame, f"MAR: {mar:.3f}", (10, 70),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
             )
             cv2.putText(
                 frame, f"Smile: {smile_ratio:.3f}", (10, 100),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
+            )
+            cv2.putText(
+                frame, f"Drop: {corner_drop:.3f}", (10, 130),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1
             )
 
         cv2.imshow("Mood Camera", frame)
