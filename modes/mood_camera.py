@@ -8,7 +8,7 @@ from core.face_tracking import (
 )
 
 
-if __name__ == "__main__":
+def run():
     cam = Camera()
     cam.start()
 
@@ -55,3 +55,7 @@ if __name__ == "__main__":
 
     cam.stop()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    run()

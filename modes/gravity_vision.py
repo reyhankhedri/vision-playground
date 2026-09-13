@@ -8,7 +8,7 @@ PENGUIN_PATH = "modes/assets/penguin.png"
 STRAWBERRY_PATH = "modes/assets/strawberry.png"
 
 
-if __name__ == "__main__":
+def run():
     cam = Camera()
     cam.start()
 
@@ -56,3 +56,7 @@ if __name__ == "__main__":
 
     cam.stop()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    run()

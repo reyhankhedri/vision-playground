@@ -43,7 +43,7 @@ def apply_invisibility(frame, background, mask):
     return result
 
 
-if __name__ == "__main__":
+def run():
     cam = Camera()
     cam.start()
 
@@ -68,3 +68,7 @@ if __name__ == "__main__":
 
     cam.stop()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    run()

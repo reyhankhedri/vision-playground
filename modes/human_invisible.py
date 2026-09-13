@@ -4,7 +4,7 @@ from core.camera import Camera
 from modes.invisible_object import capture_background, clean_mask, apply_invisibility
 
 
-if __name__ == "__main__":
+def run():
     cam = Camera()
     cam.start()
 
@@ -46,3 +46,7 @@ if __name__ == "__main__":
 
     cam.stop()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    run()
